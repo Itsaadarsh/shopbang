@@ -2,6 +2,7 @@ import express from 'express';
 import userResponse from '../utils/userResponse';
 import auth from '../middleware/auth';
 import userModel from '../models/bangUsers';
+import tokenValue from '../utils/bangTokenValue';
 
 const router = express.Router();
 
@@ -27,7 +28,7 @@ router.patch('/user', auth, async (req: express.Request, res: express.Response) 
         res.status(400).json({ error: true, data: { message: `Something went wrong, try again!` } });
         return;
       }
-      tempBangToken += 10;
+      tempBangToken += tokenValue.updateUserDetails;
     }
 
     user.bangToken = tempBangToken;

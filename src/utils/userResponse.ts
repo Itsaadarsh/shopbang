@@ -13,6 +13,7 @@ const userResponse = (res: express.Response, user: USER) => {
       instagramId: user?.instagramId,
       nationality: user?.nationality,
       bangToken: user?.bangToken,
+      referralCount: user?.referralCount,
     },
   });
 };

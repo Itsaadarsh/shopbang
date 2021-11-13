@@ -8,14 +8,13 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.String,
     required: true,
     unique: true,
-    match:
-      /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
   },
   password: { type: mongoose.Schema.Types.String, required: true },
   twitterId: { type: mongoose.Schema.Types.String, required: false },
   instagramId: { type: mongoose.Schema.Types.String, required: false },
   nationality: { type: mongoose.Schema.Types.String, required: false },
   bangToken: { type: mongoose.Schema.Types.Number, required: false },
+  referralCount: { type: mongoose.Schema.Types.Number, default: 0 },
 });
 
 export interface USER extends mongoose.Document {
@@ -28,6 +27,7 @@ export interface USER extends mongoose.Document {
   instagramId: string;
   nationality: string;
   bangToken: number;
+  referralCount: number;
 }
 
 const userModel = mongoose.model<USER>('bang_users', userSchema);
