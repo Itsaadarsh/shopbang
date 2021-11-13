@@ -4,8 +4,9 @@ import cors from 'cors';
 import { json } from 'body-parser';
 import { login } from './routes/auth/login';
 import { register } from './routes/auth/register';
-import { getUser } from './routes/userDetails';
+import { getUser } from './routes/getUserDetails';
 import log from './logger/log';
+import { updateUser } from './routes/updateUserDetails';
 
 const dotenv = require('dotenv');
 const app = express();
@@ -26,6 +27,7 @@ app.use(json());
 app.use(cors());
 
 app.use('/api/v1', getUser);
+app.use('/api/v1', updateUser);
 app.use('/api/v1', register);
 app.use('/api/v1', login);
 
