@@ -19,20 +19,28 @@ router.patch('/user', auth, async (req: express.Request, res: express.Response) 
 
     for (let i = 0; i < key.length; i++) {
       if (key[i] == 'twitterId') {
-        user.twitterId = value[i];
-        tempBangToken += tokenValue.updateUserDetails;
+        if (value[i].length > 0) {
+          user.twitterId = value[i];
+          tempBangToken += tokenValue.updateUserDetails;
+        }
+        continue;
       } else if (key[i] == 'instagramId') {
-        user.instagramId = value[i];
-        tempBangToken += tokenValue.updateUserDetails;
+        if (value[i].length > 0) {
+          user.instagramId = value[i];
+          tempBangToken += tokenValue.updateUserDetails;
+        }
+        continue;
       } else if (key[i] == 'nationality') {
-        user.nationality = value[i];
-        tempBangToken += tokenValue.updateUserDetails;
+        if (value[i].length > 0) {
+          user.nationality = value[i];
+          tempBangToken += tokenValue.updateUserDetails;
+        }
+        continue;
       } else {
         res.status(400).json({ error: true, data: { message: [`Something went wrong, try again!`] } });
         return;
       }
     }
-
     user.bangToken = tempBangToken;
     const updatedUser = await user.save();
     return userResponse(res, updatedUser);
