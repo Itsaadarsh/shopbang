@@ -1,3 +1,6 @@
-const api = "https://shopbang.herokuapp.com/api/v1";
+export const config: { api: string; frontend: string } = {
+  api: 'https://shopbang.herokuapp.com/api/v1',
+  frontend: 'https://localhost:3000/',
+};
 
-export default api;
+// export config;

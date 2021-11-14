@@ -22,7 +22,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
                   className='w-1/2 flex items-center justify-center rounded-md bg-black text-white'
                   type='submit'
                 >
-                  Buy now
+                  View Art
                 </button>
               </div>
             </div>

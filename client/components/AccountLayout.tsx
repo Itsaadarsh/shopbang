@@ -1,4 +1,4 @@
-import { NavigationPanel } from "../../components/NavigationPanel";
+import { NavigationPanel } from "./NavigationPanel";
 
 interface AccountLayoutProps {
   children: React.ReactNode;
