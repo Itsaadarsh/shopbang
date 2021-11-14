@@ -11,6 +11,7 @@ import { referralRegister } from './routes/auth/referralRegister';
 import { getProducts } from './routes/getProducts';
 import { reviewProduct } from './routes/postProductReview';
 import { getReview } from './routes/getReviews';
+import { postOrder } from './routes/postOrder';
 
 const dotenv = require('dotenv');
 const app = express();
@@ -38,6 +39,7 @@ app.use('/api/v1', login);
 app.use('/api/v1', getProducts);
 app.use('/api/v1', reviewProduct);
 app.use('/api/v1', getReview);
+app.use('/api/v1', postOrder);
 
 httpserver.listen(PORT, async () => {
   await mongoose.connect(process.env.MONGO_URI!, {
