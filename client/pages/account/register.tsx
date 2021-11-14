@@ -1,10 +1,11 @@
+import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import axios, { AxiosResponse, AxiosError } from "axios";
 
-import { ErrorData, ResponseData } from "interfaces";
-import { api } from "constants";
+import { ErrorData, ResponseData, Store } from "interfaces";
+
+import api from "constants";
 
 interface Request {
   username: string;
@@ -13,17 +14,17 @@ interface Request {
   phoneno: string;
 }
 
-const RegisterPage = () => {
-  const router = useRouter();
+const RegisterPage = ({ store }: { store: Store }) => {
   const {
     register: registerForm,
     handleSubmit: handleSubmitForm,
-    formState: { errors: errorsForm },
-    setError: setErrorForm,
   } = useForm<Request>({});
+
+  const [errors, setErrors] = useState<string[]>([]);
 
   const handleRegister = handleSubmitForm(
     async (formData: Request) => {
+      setErrors([]);
       axios.post(api + '/register', {
         username: formData.username,
         email: formData.email,
@@ -31,27 +32,10 @@ const RegisterPage = () => {
         phoneno: formData.phoneno
       }).then((response: AxiosResponse) => {
         const data: ResponseData = response.data;
-        console.log(data.data.token);
-        router.push("/");
+        store.login(formData.username, data.data.token);
       }).catch((error: AxiosError) => {
         const data: ErrorData = error?.response?.data;
-        if (data.error) {
-          data.data.message.forEach((e) => {
-            if (e.param == "username") {
-              setErrorForm("username", { message: e.msg });
-            } else if (e.param == "email") {
-              setErrorForm("email", { message: e.msg });
-            } else if (e.param == "password") {
-              setErrorForm("password", { message: e.msg });
-            } else if (e.param == "phoneno") {
-              setErrorForm("phoneno", { message: e.msg });
-            } else {
-              console.error("Error:", e.msg);
-            }
-          });
-        } else {
-          console.error("Error: Something went wrong.");
-        }
+        setErrors(data.data.message);
       });
     }
   );
@@ -72,11 +56,6 @@ const RegisterPage = () => {
                 required: true,
               })}
             />
-            {!!errorsForm.username && (
-              <p className="text-sm text-red-500 pt-2">
-                {errorsForm.username?.message}
-              </p>
-            )}
           </div>
           <div className="my-3">
             <input
@@ -87,11 +66,6 @@ const RegisterPage = () => {
                 required: true,
               })}
             />
-            {!!errorsForm.email && (
-              <p className="text-sm text-red-500 pt-2">
-                {errorsForm.email?.message}
-              </p>
-            )}
           </div>
           <div className="my-3">
             <input
@@ -102,11 +76,6 @@ const RegisterPage = () => {
                 required: true,
               })}
             />
-            {!!errorsForm.phoneno && (
-              <p className="text-sm text-red-500 pt-2">
-                {errorsForm.phoneno?.message}
-              </p>
-            )}
           </div>
           <div className="my-3">
             <input
@@ -117,17 +86,19 @@ const RegisterPage = () => {
                 required: true,
               })}
             />
-            {!!errorsForm.password && (
-              <p className="text-sm text-red-500 pt-2">
-                {errorsForm.password?.message}
-              </p>
-            )}
           </div>
-          <div className="mt-5">
+          <div className="my-5">
             <button className="w-full bg-green-500 hover:bg-green-400 text-white py-2 rounded-md transition duration-100">
               Register
             </button>
           </div>
+          {
+            errors.map((error) =>
+              <p key={error} className="text-sm text-red-500 mt-3">
+                {error}
+              </p>
+            )
+          }
         </form>
         <p className="mt-5">
           {" "}
