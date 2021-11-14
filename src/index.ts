@@ -10,6 +10,7 @@ import { updateUser } from './routes/updateUserDetails';
 import { referralRegister } from './routes/auth/referralRegister';
 import { getProducts } from './routes/getProducts';
 import { reviewProduct } from './routes/postProductReview';
+import { getReview } from './routes/getReviews';
 
 const dotenv = require('dotenv');
 const app = express();
@@ -36,6 +37,7 @@ app.use('/api/v1', referralRegister);
 app.use('/api/v1', login);
 app.use('/api/v1', getProducts);
 app.use('/api/v1', reviewProduct);
+app.use('/api/v1', getReview);
 
 httpserver.listen(PORT, async () => {
   await mongoose.connect(process.env.MONGO_URI!, {
