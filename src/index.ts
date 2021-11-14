@@ -9,6 +9,7 @@ import log from './logger/log';
 import { updateUser } from './routes/updateUserDetails';
 import { referralRegister } from './routes/auth/referralRegister';
 import { getProducts } from './routes/getProducts';
+import { reviewProduct } from './routes/postProductReview';
 
 const dotenv = require('dotenv');
 const app = express();
@@ -34,6 +35,7 @@ app.use('/api/v1', register);
 app.use('/api/v1', referralRegister);
 app.use('/api/v1', login);
 app.use('/api/v1', getProducts);
+app.use('/api/v1', reviewProduct);
 
 httpserver.listen(PORT, async () => {
   await mongoose.connect(process.env.MONGO_URI!, {

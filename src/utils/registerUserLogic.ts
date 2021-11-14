@@ -18,15 +18,15 @@ const register = async (req: express.Request, res: express.Response) => {
   const isPhonenoAvai = await userModel.find({ phoneno: +phoneno });
 
   if (isUserEmailAvai.length != 0) {
-    res.status(400).json({ error: true, data: { message: `'${email}' email already exists` } });
+    res.status(400).json({ error: true, data: { message: [`'${email}' email already exists`] } });
     return false;
   }
   if (isPhonenoAvai.length != 0) {
-    res.status(400).json({ error: true, data: { message: `'${phoneno}' phone number already exists` } });
+    res.status(400).json({ error: true, data: { message: [`'${phoneno}' phone number already exists`] } });
     return false;
   }
   if (isUsernameAvai.length != 0) {
-    res.status(400).json({ error: true, data: { message: `'${username}' username already exists` } });
+    res.status(400).json({ error: true, data: { message: [`'${username}' username already exists`] } });
     return false;
   }
 

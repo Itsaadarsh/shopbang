@@ -1,17 +1,15 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-import validationMiddleware from '../../middleware/validation/validationLogin';
-import { validationResult } from 'express-validator';
+import validationMiddleware from '../../middleware/validation/login';
 import userModel from '../../models/bangUsers';
 import jwt from 'jsonwebtoken';
+import validate from '../../utils/validationError';
 
 const router = express.Router();
 
 router.post('/login', validationMiddleware(), async (req: express.Request, res: express.Response) => {
   try {
-    const valiErrors = validationResult(req);
-    if (!valiErrors.isEmpty()) {
-      res.status(400).json({ error: true, data: { message: valiErrors.array() } });
+    if (validate(req, res)) {
       return;
     }
 
@@ -19,13 +17,13 @@ router.post('/login', validationMiddleware(), async (req: express.Request, res: 
     const isUsernamelAvai = await userModel.findOne({ username });
 
     if (isUsernamelAvai === null) {
-      res.status(400).json({ error: true, data: { message: `'${username}' username does not exists` } });
+      res.status(400).json({ error: true, data: { message: [`'${username}' username does not exists`] } });
       return;
     }
 
     bcrypt.compare(password, isUsernamelAvai.password, (err, hash) => {
       if (err || hash === false) {
-        res.status(400).json({ error: true, data: { message: `Incorrect Password, Try Again!` } });
+        res.status(400).json({ error: true, data: { message: [`Incorrect Password, Try Again!`] } });
         return;
       }
 
@@ -42,7 +40,7 @@ router.post('/login', validationMiddleware(), async (req: express.Request, res: 
       return;
     });
   } catch (err) {
-    res.status(400).json({ error: true, data: { message: err.message } });
+    res.status(400).json({ error: true, data: { message: [err.message] } });
   }
 });
 

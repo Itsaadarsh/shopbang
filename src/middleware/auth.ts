@@ -8,7 +8,7 @@ const auth = async (req: express.Request, res: express.Response, next: express.N
     req.user = verifiedToken;
     next();
   } catch (err) {
-    res.status(400).json({ error: true, data: { message: `Auth failed` } });
+    res.status(400).json({ error: true, data: { message: [`Auth failed`] } });
   }
 };
 

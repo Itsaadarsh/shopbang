@@ -7,13 +7,13 @@ router.get('/products', async (_: express.Request, res: express.Response) => {
   try {
     const products = await productModel.find({});
     if (products.length == 0) {
-      res.status(400).json({ error: true, data: { message: `No products found` } });
+      res.status(400).json({ error: true, data: { message: [`No products found`] } });
       return;
     }
     res.status(201).json({ error: false, data: products });
     return;
   } catch (err) {
-    res.status(400).json({ error: true, data: { message: err.message } });
+    res.status(400).json({ error: true, data: { message: [err.message] } });
     return;
   }
 });

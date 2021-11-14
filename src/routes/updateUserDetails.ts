@@ -10,7 +10,7 @@ router.patch('/user', auth, async (req: express.Request, res: express.Response) 
   try {
     const user = await userModel.findOne({ _id: req.user!.userid });
     if (!user) {
-      res.status(400).json({ error: true, data: { message: `Something went wrong` } });
+      res.status(400).json({ error: true, data: { message: [`Something went wrong`] } });
       return;
     }
 
@@ -25,7 +25,7 @@ router.patch('/user', auth, async (req: express.Request, res: express.Response) 
       } else if (key[i] == 'nationality') {
         user.nationality = value[i];
       } else {
-        res.status(400).json({ error: true, data: { message: `Something went wrong, try again!` } });
+        res.status(400).json({ error: true, data: { message: [`Something went wrong, try again!`] } });
         return;
       }
       tempBangToken += tokenValue.updateUserDetails;
@@ -35,7 +35,7 @@ router.patch('/user', auth, async (req: express.Request, res: express.Response) 
     const updatedUser = await user.save();
     return userResponse(res, updatedUser);
   } catch (err) {
-    res.status(400).json({ error: true, data: { message: err.message } });
+    res.status(400).json({ error: true, data: { message: [err.message] } });
     return;
   }
 });
