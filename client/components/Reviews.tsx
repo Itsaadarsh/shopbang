@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { config } from '../constants';
 import { ErrorData, Review, ReviewResponseData, Store } from 'interfaces';
+import router from 'next/router';
 
 interface Request {
   review: string;
@@ -38,6 +39,7 @@ export const Reviews = ({ store, productId }: { store: Store; productId: string 
         { headers: { Authorization: `Bearer ${store.tokenCookie}` } }
       )
       .then((response: AxiosResponse) => {
+        router.push('/');
         getReviews();
       })
       .catch((error: AxiosError) => {

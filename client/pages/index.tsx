@@ -27,7 +27,7 @@ const Home = ({ store }: { store: Store }) => {
       });
   }, []);
 
-  if (!store.products) return <p>No Products</p>;
+  if (!store.products) return <p>Loading Products!</p>;
 
   return (
     <div>

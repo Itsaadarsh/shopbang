@@ -12,11 +12,11 @@ export const Navbar = ({ store }: { store: Store }) => {
           <div className='flex justify-between items-center'>
             <Link href='/'>
               <a>
-                <div className='mt-px group block h-16 w-28 relative'>SB</div>
+                <div className='mt-px group block h-16 w-28 relative'>SHOP BANG</div>
               </a>
             </Link>
           </div>
-          <p>Bang Token: {store.user && store.user.bangToken}</p>
+          <p>Bang Token: {store.user ? store.user.bangToken : 0}</p>
           <div className='flex space-x-px md:space-x-8 items-center'>
             {!store.usernameCookie && (
               <Link href='/account/login'>
