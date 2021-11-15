@@ -77,8 +77,8 @@ export const Reviews = ({ store, productId }: { store: Store; productId: string 
         <div>
           {reviews.map(review => (
             <div key={review._id}>
-              <p>{review.username}</p>
-              <p>{review.review}</p>
+              <p>USERNAME : {review.username}</p>
+              <p>REVIEW : {review.review}</p>
             </div>
           ))}
         </div>
